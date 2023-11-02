@@ -1,0 +1,37 @@
+<div class="h-100 d-flex p-5  pt-4 flex-column">
+	<div class="d-flex justify-content-between align-items-center">
+		<h5>TODO LIST</h5>
+		<button type="button" class="btn btn-primary" (click)="this.editData = {};open(content)">Add New Todo</button>
+	</div>
+	<ul class="list-group pt-4 " *ngFor="let item of service.todoList">
+		<li class="list-group-item d-flex justify-content-between" [ngClass]="{'completed' : item.completed}" (click)="service.completed(item.id)">
+			<div >{{item.name}}</div>
+			<div class="d-flex justify-content-between">
+				<fa-icon class="px-2" [icon]="faEdit"  click-stop-propagation (click)="edit(item, content)"></fa-icon>
+				<fa-icon class="px-2" [icon]="faTrash" click-stop-propagation (click)="service.remove(item.id)" ></fa-icon>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<ng-template #content let-modal>
+	<form novalidate>
+		<div class="modal-header">
+			<h4 class="modal-title" id="modal-basic-title">Add Todo</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+		</div>
+		<div class="modal-body">
+
+			<div class="mb-3">
+				<label for="dateOfBirth">Name</label>
+
+				<input class="form-control" [formControl]="todoName" />
+
+			</div>
+
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-outline-dark" (click)="onSave(modal)">{{this.editData.id ? 'update' : 'Save'}}</button>
+		</div>
+	</form>
+</ng-template>
